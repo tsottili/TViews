@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TGraph">
+        <attr name="PrintOrigin" format="boolean"/>
+        <attr name="Line" format="boolean" />
+        <attr name="labelPosition" format="enum">
+            <enum name="None" value="-1"/>
+            <enum name="Zero" value="0"/>
+            <enum name="Middle" value="1"/>
+            <enum name="Far" value="2"/>
+        </attr>
+        <attr name="XAxis" format="float" />
+        <attr name="YAxis" format="float" />
+        <attr name="XNegativeLimit" format="float" />
+        <attr name="XPositiveLimit" format="float" />
+        <attr name="YNegativeLimit" format="float" />
+        <attr name="YPositiveLimit" format="float" />
+
+    </declare-styleable>
+</resources>
