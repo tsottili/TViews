@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import toms.lib.libtviews.TGraph;
 import toms.lib.libtviews.TSignal;
+import toms.lib.libtcommon.TTimer;
 
 public class TestTViewActivity extends AppCompatActivity {
 

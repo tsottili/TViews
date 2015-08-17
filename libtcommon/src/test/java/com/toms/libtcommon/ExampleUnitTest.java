@@ -1,4 +1,4 @@
-package com.toms.libtcommon;
+package toms.lib.libtcommon;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.toms.libtcommon;
+package toms.lib.libtcommon;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

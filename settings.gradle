@@ -1,2 +1,3 @@
-include ':app', ':libtcommon'
+include ':app'
+include ':libtcommon'
 include ':libtviews'

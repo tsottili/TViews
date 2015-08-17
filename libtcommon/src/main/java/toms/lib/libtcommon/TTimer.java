@@ -1,8 +1,7 @@
-package toms.tviews;
+package toms.lib.libtcommon;
 
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 /**
  * Created by toms on 05/08/15.
