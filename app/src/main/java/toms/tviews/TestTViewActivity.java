@@ -1,16 +1,64 @@
 package toms.tviews;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import toms.lib.libtviews.TGraph;
+import toms.lib.libtviews.TSignal;
+
 public class TestTViewActivity extends AppCompatActivity {
+
+    TGraph mGraph = null;
+    TSignal mySig = null;
+
+    double x = 0;
+
+    TTimer mTTimer = new TTimer()
+    {
+        @Override
+        public void tick() {
+            if (mySig != null) {
+
+                if (x > mGraph.getXPositiveLimit()) {
+                    mySig.clear();
+                    x = mGraph.getXNegativeLimit();
+                }
+
+                double y = Math.sin(x);
+
+                boolean bMoveTo = (x==mGraph.getXNegativeLimit());
+                mySig.addPoint((float)x, (float)y, bMoveTo);
+
+                x=x+0.1;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_tview);
+
+        mGraph = (TGraph)findViewById(R.id.graphview);
+
+
+        x = mGraph.getXNegativeLimit();
+
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setStyle(Paint.Style.STROKE);
+        p.setColor(Color.BLUE);
+
+        mySig = new TSignal(p);
+
+        mGraph.AddSignal(mySig);
+        mySig.enableDraw(true);
+
+        mTTimer.start(100);
     }
 
     @Override
@@ -34,4 +82,9 @@ public class TestTViewActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }
+
+
