@@ -15,6 +15,7 @@ public class TestTViewActivity extends AppCompatActivity {
 
     TGraph mGraph = null;
     TSignal mySig = null;
+    TSignal mySig2 = null;
 
     double x = 0;
 
@@ -26,6 +27,7 @@ public class TestTViewActivity extends AppCompatActivity {
 
                 if (x > mGraph.getXPositiveLimit()) {
                     mySig.clear();
+                    mySig2.clear();
                     x = mGraph.getXNegativeLimit();
                 }
 
@@ -34,8 +36,15 @@ public class TestTViewActivity extends AppCompatActivity {
                 boolean bMoveTo = (x==mGraph.getXNegativeLimit());
                 mySig.addPoint((float)x, (float)y, bMoveTo);
 
+
+                double x2 = -x;
+                double y2 = Math.cos(x2);
+                mySig2.addPoint((float)x2, (float)y2, bMoveTo);
+
                 x=x+0.1;
             }
+
+
         }
     };
 
@@ -56,8 +65,17 @@ public class TestTViewActivity extends AppCompatActivity {
 
         mySig = new TSignal(p);
 
+        Paint p2 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p2.setStyle(Paint.Style.STROKE);
+        p2.setColor(Color.RED);
+        mySig2= new TSignal(p2);
+
+
         mGraph.AddSignal(mySig);
+        mGraph.AddSignal(mySig2);
+
         mySig.enableDraw(true);
+        mySig2.enableDraw(true);
 
         mTTimer.start(100);
     }
