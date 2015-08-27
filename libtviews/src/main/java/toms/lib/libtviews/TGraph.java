@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,45 +23,49 @@ public class TGraph extends View {
 
     protected boolean mbDrawLine;
 
-    // Stampa le coordinate degli assi
+    // Print axes origin
     protected boolean mbPrintOrigin;
-
-    // -1 no label
-    // 0 -> label a zero
-    // 1 -> label a meta asse
-    protected int mLabelPosition;
 
     // Paints
     protected Paint mAxisPaint;
     protected Paint mBGPaint;
     protected Paint mGraphPaint;
     protected Paint mLabelPaint;
+    protected Paint mGridPaint;
 
-    // Dimensioni della view in px
+    // View size in pixels
     protected int mWidth = 1;
     protected int mHeight = 1;
 
-    // Sistema XY: sistema di riferimento del grafico in input.
+    // XY are the input coordinates for the graph, UV are the drawing coordinate.
 
-    //Coordinate visibili
+    // XY visible limit
     protected float mXNegativeLimit = -1;
     protected float mYNegativeLimit = -1;
     protected float mXPositiveLimit = 1;
     protected float mYPositiveLimit = 1;
 
-    // Coordinate del punto da cui si disegna il sistema di rifeirmento
-    protected float mAxisX = 0;     // coordinata x per il disegno del sistema di riferimento
-    protected float mAxisY = 0;     // coordinata y per il disegno del sistema di riferimento
+    // origin coordinate
+    protected float mAxisX = 0;     // x value for drawing axis
+    protected float mAxisY = 0;     // y value for drawing axis
 
-    // Sistema UV: sistema di riferimeto del disegno del grafico
+    // UV coodidate value for drawing axis.
     protected float mAxisU = 0;
     protected float mAxisV = 0;
+
+    // Scaling X U and Y V
     protected float mScaleU = 1;
     protected float mScaleV = 1;
 
+    // Space between grid lines. When 0 grid is not visible
+    private float mGridXWidth = 0;
+    private float mGridYWidth = 0;
 
-    // Vettore degli elementi grafici da disegnare
+    // Array of the existing signal
     protected ArrayList<TSignal> mList = new ArrayList<TSignal>();
+
+    protected Path mGridPath = null;
+
 
     public TGraph(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,7 +77,6 @@ public class TGraph extends View {
 
         try {
             mbDrawLine = a.getBoolean(R.styleable.TGraph_Line, false);
-            mLabelPosition = a.getInteger(R.styleable.TGraph_labelPosition, -1);
 
             mAxisX = a.getFloat(R.styleable.TGraph_XAxis, 0.0f);
             mAxisY = a.getFloat(R.styleable.TGraph_YAxis,0.0f);
@@ -81,6 +86,8 @@ public class TGraph extends View {
             mYPositiveLimit = a.getFloat(R.styleable.TGraph_YPositiveLimit, 100f);
 
             mbPrintOrigin = a.getBoolean(R.styleable.TGraph_PrintOrigin, false);
+            mGridXWidth = a.getFloat(R.styleable.TGraph_GridXInterval, 0);
+            mGridYWidth = a.getFloat(R.styleable.TGraph_GridYInterval, 0);
 
         } finally {
             a.recycle();
@@ -88,8 +95,10 @@ public class TGraph extends View {
 
         mList.clear();
 
+        // Adapt values to the view
         CalculateUV();
 
+        //  Create all the necessary Paints
         initPaints();
 
     }
@@ -162,6 +171,10 @@ public class TGraph extends View {
         mLabelPaint.setTextSize(10);
         mLabelPaint.setColor(Color.RED);
 
+        mGridPaint = new Paint();
+        mGridPaint.setColor(Color.BLACK);
+        mGridPaint.setStyle(Paint.Style.STROKE);
+        mGridPaint.setPathEffect(new DashPathEffect(new float[]{5, 2}, 0));
     }
 
     @Override
@@ -176,21 +189,29 @@ public class TGraph extends View {
     @Override
     protected void onDraw (Canvas canvas) {
 
-        // Disegna il background
+        // Draw background
         canvas.drawPaint(mBGPaint);
 
-        // Disegna il sistema di riferimentp
-        // Asse y
+        // Draw the grid if requsted
+        if (mGridPath != null)
+        {
+            canvas.drawPath(mGridPath, mGridPaint);
+        }
+
+        // Axis:
+        // y
         canvas.drawLine(mAxisU, 0f, mAxisU, mHeight, mAxisPaint);
-        // Asse x
+        // x
         canvas.drawLine(0f, mAxisV, mWidth, mAxisV, mAxisPaint);
 
+        // Print the orgin values?
         if (mbPrintOrigin)
         {
             String sOrigin = "(" + mAxisX + "," +mAxisY+")";
             canvas.drawText(sOrigin, mAxisU + mLabelPaint.getTextSize(), mAxisV + mLabelPaint.getTextSize(), mLabelPaint);
         }
 
+        // Finally draw the signals!
         for (TSignal signal:mList)
         {
             signal.onDraw(canvas);
@@ -198,16 +219,19 @@ public class TGraph extends View {
 
     }
 
+    // Conversion from X to U
     protected float X2U(float value)
     {
         return mWidth * (value - mXNegativeLimit)/(mXPositiveLimit - mXNegativeLimit);
     }
 
+    // Conversion from Y to V
     protected float Y2V(float value)
     {
         return mHeight * (value - mYPositiveLimit)/(mYNegativeLimit - mYPositiveLimit);
     }
 
+    // Calculate all the conversion for drawing on UV.
     protected void CalculateUV()
     {
         mAxisU = X2U(mAxisX);
@@ -224,6 +248,48 @@ public class TGraph extends View {
             signal.setXY2UVMatrix(m);
         }
 
+
+        if ( (mGridXWidth > 0) || (mGridYWidth > 0) )
+        {
+            mGridPath = new Path();
+
+            // Draw vertical grid lines, if requested
+            if (mGridXWidth > 0) {
+
+                for (float dx = 0; dx > mXNegativeLimit; dx = dx - mGridXWidth) {
+                    float du = X2U(dx);
+                    mGridPath.moveTo(du, 0f);
+                    mGridPath.lineTo(du, mHeight);
+                }
+
+                for (float dx = 0; dx < mXPositiveLimit; dx = dx + mGridXWidth) {
+                    float du = X2U(dx);
+                    mGridPath.moveTo(du, 0f);
+                    mGridPath.lineTo(du, mHeight);
+                }
+
+            }
+
+            // Draw horizontal grid lines, if requested
+            if (mGridYWidth > 0) {
+
+                for (float dy = 0; dy > mYNegativeLimit; dy = dy - mGridYWidth) {
+                    float dv = Y2V(dy);
+                    mGridPath.moveTo(0f, dv);
+                    mGridPath.lineTo(mWidth, dv);
+                }
+
+                for (float dy = 0; dy < mXPositiveLimit; dy = dy + mGridYWidth) {
+                    float dv = Y2V(dy);
+                    mGridPath.moveTo(0f, dv);
+                    mGridPath.lineTo(mWidth, dv);
+                }
+            }
+        }
+        else
+        {
+            mGridPath = null;
+        }
         invalidate();
         requestLayout();
     }
@@ -261,6 +327,22 @@ public class TGraph extends View {
 
         invalidate();
         requestLayout();
+    }
+
+    public float getGridXWidth() {
+        return mGridXWidth;
+    }
+
+    public void setGridXWidth(float GridXWidth) {
+        mGridXWidth = GridXWidth;
+    }
+
+    public float getGridYWidth() {
+        return mGridYWidth;
+    }
+
+    public void setGridYWidth(float GridYWidth) {
+        mGridYWidth = GridYWidth;
     }
 
 }

@@ -23,6 +23,10 @@
         app:XNegativeLimit="-3.14"
         app:XPositiveLimit="3.14"
         app:YNegativeLimit="-1"
-        app:YPositiveLimit="1"/>
+        app:YPositiveLimit="1"
+        app:GridXInterval="0.5"
+        app:GridYInterval="0.1"/>
+
+
 
 </RelativeLayout>
