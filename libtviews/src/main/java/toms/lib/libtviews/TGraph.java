@@ -189,8 +189,11 @@ public class TGraph extends View {
     @Override
     protected void onDraw (Canvas canvas) {
 
-        // Draw background
-        canvas.drawPaint(mBGPaint);
+        // DrawPaint not supported in edit mode
+        if (isInEditMode() == false) {
+            // Draw background
+            canvas.drawPaint(mBGPaint);
+        }
 
         // Draw the grid if requsted
         if (mGridPath != null)
