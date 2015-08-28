@@ -21,7 +21,8 @@
             android:text="X-"
             android:id="@+id/btn_x_out"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.25" />
 
         <Button
             android:layout_width="wrap_content"
@@ -29,7 +30,8 @@
             android:text="X+"
             android:id="@+id/btn_x_in"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.25" />
 
         <Button
             android:layout_width="wrap_content"
@@ -37,7 +39,8 @@
             android:text="Y-"
             android:id="@+id/btn_y_out"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.25" />
 
         <Button
             android:layout_width="wrap_content"
@@ -45,7 +48,8 @@
             android:text="Y+"
             android:id="@+id/btn_y_in"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.25" />
     </LinearLayout>
 
     <toms.lib.libtviews.TGraph
@@ -59,6 +63,5 @@
         app:YPositiveLimit="1"
         app:GridXInterval="1"
         app:GridYInterval="0.5" />
-
-
+    
 </LinearLayout>
