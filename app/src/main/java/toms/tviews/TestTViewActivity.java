@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import toms.lib.libtviews.TGraph;
 import toms.lib.libtviews.TSignal;
@@ -17,8 +19,8 @@ public class TestTViewActivity extends AppCompatActivity {
     TSignal mySig = null;
     TSignal mySig2 = null;
 
+    // Timer staff.
     double x = 0;
-
     TTimer mTTimer = new TTimer()
     {
         @Override
@@ -53,6 +55,62 @@ public class TestTViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_tview);
+
+        Button btn;
+
+        btn = (Button)findViewById(R.id.btn_x_in);
+        if (btn != null) {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mGraph != null) {
+                        mGraph.setXNegativeLimit(mGraph.getXNegativeLimit() / 4f);
+                        mGraph.setXPositiveLimit(mGraph.getXPositiveLimit() / 4f);
+                    }
+                }
+            });
+        }
+
+        btn = (Button)findViewById(R.id.btn_x_out);
+        if (btn != null)
+        {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mGraph != null) {
+                        mGraph.setXNegativeLimit(mGraph.getXNegativeLimit() * 1.25f);
+                        mGraph.setXPositiveLimit(mGraph.getXPositiveLimit() * 1.25f);
+                    }
+                }
+            });
+        }
+
+        btn = (Button)findViewById(R.id.btn_y_in);
+        if (btn != null) {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mGraph != null) {
+                        mGraph.setYNegativeLimit(mGraph.getYNegativeLimit() / 4f);
+                        mGraph.setYPositiveLimit(mGraph.getYPositiveLimit() / 4f);
+                    }
+                }
+            });
+        }
+
+        btn = (Button)findViewById(R.id.btn_y_out);
+        if (btn != null)
+        {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mGraph != null) {
+                        mGraph.setYNegativeLimit(mGraph.getYNegativeLimit() * 1.25f);
+                        mGraph.setYPositiveLimit(mGraph.getYPositiveLimit() * 1.25f);
+                    }
+                }
+            });
+        }
 
         mGraph = (TGraph)findViewById(R.id.graphview);
 
