@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+	<string name="title_activity_tgraph">TGraphActivity</string>
+    <string name="STR_TRY">Try!</string>
+    <string name="STR_TGraph">TGraph View</string>
 </resources>
