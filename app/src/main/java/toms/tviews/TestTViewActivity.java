@@ -1,14 +1,19 @@
 package toms.tviews;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import toms.lib.libtviews.TGraph;
 import toms.lib.libtviews.TSignal;
@@ -21,7 +26,9 @@ public class TestTViewActivity extends AppCompatActivity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_test_tview);
 
-	    Button btn;
+        int res = R.layout.list_item;
+
+        Button btn;
 
 	    btn = (Button) findViewById(R.id.IdBtnTGraph);
 	    if (btn != null) {
@@ -33,6 +40,13 @@ public class TestTViewActivity extends AppCompatActivity {
 			    }
 		    });
 	    }
+
+	    ListView lv = (ListView)findViewById(R.id.testListView);
+		LAdapter mAdapter = new LAdapter();
+		mAdapter.init(getApplicationContext(), R.layout.list_item);
+
+	    lv.setAdapter(mAdapter);
+
     }
 
     @Override
