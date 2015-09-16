@@ -14,6 +14,8 @@ import toms.lib.libtviews.TEasyAdapter;
 
 /**
  * Created by toms on 15/09/15.
+ * TEasyAdapter implementation example.
+ * Fill the list of the Views in this project
  */
 public class ConcreteAdapter extends TEasyAdapter {
 
