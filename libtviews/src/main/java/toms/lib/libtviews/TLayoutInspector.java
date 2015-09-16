@@ -1,4 +1,4 @@
-package toms.lib.libtcommon;
+package toms.lib.libtviews;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
@@ -8,7 +8,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +22,7 @@ public class TLayoutInspector {
 	// current context
 	protected Context mContext = null;
 
+	// Layout nodes, as inspected
 	ArrayList<TLayoutInspectorNode> mList = null;
 
 	// Main constructor
@@ -31,7 +31,14 @@ public class TLayoutInspector {
 		mResource = iResource;
 		mContext = context;
 		mList = new ArrayList<>();
+	}
 
+	public int count()
+	{
+		if (mList != null)
+			return mList.size();
+		else
+			return 0;
 	}
 
 	// parse the resource file.
@@ -60,8 +67,10 @@ public class TLayoutInspector {
 				switch (type) {
 					case XmlPullParser.START_TAG: {
 
+						// New node creation on start tag
 						TLayoutInspectorNode node = new TLayoutInspectorNode();
 
+						// FIll informations.
 						node.mName = xmlp.getName();
 						node.mLevel = iCurrentLevel;
 						node.mId = -1;
@@ -77,12 +86,20 @@ public class TLayoutInspector {
 							}
 						}
 
+						// if node has an Id is a valid field
+						if ( (node != null) && (node.mId != -1))
+						{
+							mList.add(node);
+						}
+
 						iCurrentLevel++;
 
 					}
 					break;
 					case XmlPullParser.END_TAG: {
 						iCurrentLevel--;
+
+
 					}
 					break;
 					default:
@@ -100,6 +117,31 @@ public class TLayoutInspector {
 
 		printLogCat();
 		return true;
+	}
+
+
+	public int getId(int index)
+	{
+		if ( index < count() )
+		{
+			return mList.get(index).mId;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+	public String getName(int index)
+	{
+		if ( index < count() )
+		{
+			return mList.get(index).mName;
+		}
+		else
+		{
+			return "";
+		}
 	}
 
 	private void printLogCat()

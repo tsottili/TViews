@@ -1,4 +1,4 @@
-package toms.lib.libtcommon;
+package toms.lib.libtviews;
 
 /**
  * Info node for TLayoutInspector

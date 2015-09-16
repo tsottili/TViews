@@ -2,24 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="50dp"
+              android:weightSum="1">
 
         <ImageView
             android:id="@+id/item_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
             android:src="@android:drawable/ic_input_add"
             android:clickable="false"
-            android:longClickable="false">
+            android:longClickable="false"
+            android:layout_weight="0.06">
         </ImageView>
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="List Item"
             android:id="@+id/itemName"
             android:longClickable="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_weight="0.89"
+            />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Try"
+        android:id="@+id/button_try"/>
 
 </LinearLayout>

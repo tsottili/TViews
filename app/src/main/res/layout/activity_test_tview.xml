@@ -18,16 +18,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/STR_TGraph"
+            android:text="This list view is powered by TEasyAdapter"
             android:id="@+id/textView"
-            android:layout_weight="0.89"/>
+            android:layout_weight="0.89"
+            android:textSize="@dimen/abc_text_size_small_material"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/STR_TRY"
-            android:id="@+id/IdBtnTGraph"
-            />
     </LinearLayout>
 
     <ListView
