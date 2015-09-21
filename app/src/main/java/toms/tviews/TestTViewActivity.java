@@ -42,6 +42,12 @@ public class TestTViewActivity extends AppCompatActivity {
 		mAdapter.addItem("TGraph", R.drawable.abc_btn_check_material, TGraphActivity.class);
 	    mAdapter.addItem("next view goes here", R.drawable.abc_btn_check_material, null);
 
+	    for (int i = 0; i < 100; i++) {
+	        String s = "line " + i;
+		    mAdapter.addItem(s, R.drawable.abc_btn_check_material+i, null);
+	    }
+
+
 	    lv.setAdapter(mAdapter);
     }
 
