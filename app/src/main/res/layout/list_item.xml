@@ -7,29 +7,31 @@
 
         <ImageView
             android:id="@+id/item_icon"
-            android:layout_width="44dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:src="@android:drawable/ic_input_add"
             android:clickable="false"
             android:longClickable="false"
-            android:layout_weight="0.06">
+            android:layout_weight="0.1">
         </ImageView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="List Item"
             android:id="@+id/itemName"
             android:longClickable="false"
             android:clickable="false"
-            android:layout_weight="0.89"
-            />
+            android:layout_weight="0.75"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="Try"
-        android:id="@+id/button_try"/>
+        android:id="@+id/button_try"
+        android:layout_weight="0.15"/>
 
 </LinearLayout>
