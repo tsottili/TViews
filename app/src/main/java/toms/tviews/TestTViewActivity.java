@@ -30,25 +30,26 @@ public class TestTViewActivity extends AppCompatActivity {
 	    ListView lv = (ListView)findViewById(R.id.testListView);
 
 	    // Create the TEasyAdapter implementation
-	    ConcreteAdapter mAdapter = new ConcreteAdapter();
+	    ConcreteAdapter myAdapter = new ConcreteAdapter();
 
 	    // call the init method
-        mAdapter.init(getApplicationContext(), R.layout.list_item);
+        myAdapter.init(getApplicationContext(), R.layout.list_item);
 
 	    // this implementation need the parent activity to launch activities
-	    mAdapter.setParentActivity(this);
+	    myAdapter.setParentActivity(this);
 
 	    // add the list items
-		mAdapter.addItem("TGraph", R.drawable.abc_btn_check_material, TGraphActivity.class);
-	    mAdapter.addItem("next view goes here", R.drawable.abc_btn_check_material, null);
+		myAdapter.addItem("TGraph", R.drawable.abc_btn_check_material, TGraphActivity.class);
+	    myAdapter.addItem("TestEasyAdapter", R.drawable.abc_btn_check_material, TestEasyAdapterActivity.class);
+	    myAdapter.addItem("next view goes here", R.drawable.abc_btn_check_material, null);
 
 	    for (int i = 0; i < 100; i++) {
 	        String s = "line " + i;
-		    mAdapter.addItem(s, R.drawable.abc_btn_check_material+i, null);
+		    myAdapter.addItem(s, R.drawable.abc_btn_check_material + i, null);
 	    }
 
 
-	    lv.setAdapter(mAdapter);
+	    lv.setAdapter(myAdapter);
     }
 
     @Override

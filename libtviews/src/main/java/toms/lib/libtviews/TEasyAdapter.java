@@ -45,6 +45,9 @@ public abstract class TEasyAdapter extends BaseAdapter {
 	// Row layout resource
 	protected int mResource;
 
+	// Set to true if convert view was NULL in the getView..
+	protected boolean mbFirstTime;
+
 	// Init the easy adapter. Parameters are the current context and the line layout resource
 	public boolean init(Context context, int resource) {
 
@@ -64,6 +67,9 @@ public abstract class TEasyAdapter extends BaseAdapter {
 			return false;
 		}
 
+		// Default value
+		mbFirstTime = false;
+
 		return true;
 	}
 
@@ -71,10 +77,16 @@ public abstract class TEasyAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
+		// Default value
+		mbFirstTime = false;
+
 		if( convertView == null ){
 			// if convert view is null, we need to ask for the view to use.
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(mResource, parent, false);
+
+			// ConvertView was null
+			mbFirstTime = true;
 		}
 
 		for (int i = 0; i < mInspector.count(); i++)
@@ -83,7 +95,7 @@ public abstract class TEasyAdapter extends BaseAdapter {
 			View v = convertView.findViewById(mInspector.getId(i));
 			if (v != null) {
 				// And ask for update.
-				updateValue(position, mInspector.getId(i), v);
+				updateValue(position, mInspector.getId(i), v, mbFirstTime);
 			}
 		}
 
@@ -96,6 +108,6 @@ public abstract class TEasyAdapter extends BaseAdapter {
 	//     position: the row to be updated
 	//     resource: the resource int of the view to be updated
 	//     v:        the view to be updated (cast it to what it is).
-	abstract public void updateValue(int position, int resource, View v);
+	abstract public void updateValue(int position, int resource, View v, boolean bFirstTime);
 
 }

@@ -20,6 +20,8 @@
             android:name=".TGraphActivity"
             android:label="@string/title_activity_tgraph" >
         </activity>
+        <activity android:name=".TestEasyAdapterActivity" >
+        </activity>
     </application>
 
 </manifest>

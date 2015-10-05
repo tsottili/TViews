@@ -38,7 +38,7 @@ public class ConcreteAdapter extends TEasyAdapter {
 	}
 
 	@Override
-	public void updateValue(int position, int resource, View v) {
+	public void updateValue(int position, int resource, View v, boolean bFirstTime) {
 		if (resource == R.id.itemName)
 		{
 			TextView t = (TextView)v;
