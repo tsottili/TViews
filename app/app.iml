@@ -94,6 +94,7 @@
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="module" module-name="libtcommon" exported="" />
+    <orderEntry type="module" module-name="libtgview" exported="" />
     <orderEntry type="module" module-name="libtviews" exported="" />
   </component>
 </module>
