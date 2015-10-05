@@ -41,6 +41,7 @@ public class TestTViewActivity extends AppCompatActivity {
 	    // add the list items
 		myAdapter.addItem("TGraph", R.drawable.abc_btn_check_material, TGraphActivity.class);
 	    myAdapter.addItem("TestEasyAdapter", R.drawable.abc_btn_check_material, TestEasyAdapterActivity.class);
+        myAdapter.addItem("TestTGViewActivity", R.drawable.abc_item_background_holo_dark , TestTGViewActivity.class);
 	    myAdapter.addItem("next view goes here", R.drawable.abc_btn_check_material, null);
 
 	    for (int i = 0; i < 100; i++) {
