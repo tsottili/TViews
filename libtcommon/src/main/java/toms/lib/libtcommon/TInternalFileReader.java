@@ -1,105 +1,102 @@
 package toms.lib.libtcommon;
 
-import android.app.Activity;
+import android.content.Context;
 
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by toms on 21/09/13.
- * Open an InternalFile for reading operation
+ * Lettura di un file dalla memoria interna.
  */
-public class TInternalFileReader extends TInternalFileManager
-{
+public class TInternalFileReader extends TInternalFileManager {
 
-	protected FileInputStream m_fs = null;
+    protected FileInputStream m_fs = null;
 
+    protected DataInputStream mDataInputStream = null;
 
-	public TInternalFileReader(Activity owner)
-	{
-		super(owner);
-	}
-
-
-	public boolean OpenFile(String strFilename)
-	{
-		try
-		{
-			m_fs = m_Owner.openFileInput(strFilename);
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-
-		return true;
-	}
-
-	public int ReadElement()
-	{
-		byte[] bytes = new byte[4];
-
-		try
-		{
-			m_fs.read(bytes,0,4);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+    public TInternalFileReader(Context c) {
+        super(c);
+    }
 
 
-		int iElem = bytes[0] +
-				bytes[1] * 0xFF +
-				bytes[2] * 0xFFFF+
-				bytes[3] * 0xFFFFFF;
+    public boolean open(String strFilename) {
+        try {
+            m_fs = mContext.openFileInput(strFilename);
+            mDataInputStream = new DataInputStream(m_fs);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.FILE_NOT_FOUND;
+            m_ErrorCode.setMessage(e.getMessage());
+        }
 
-		return iElem;
-	}
+        return true;
 
-	public String ReadElement(int iLen)
-	{
+    }
 
-		byte[] bytes = new byte[iLen];
+    public DataInputStream getInputStream() {
+        return mDataInputStream;
+    }
 
-		try
-		{
-			m_fs.read(bytes,0,iLen);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+    public int ReadInt() {
+        try {
+            return mDataInputStream.readInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.ERROR_READ_FILE;
+            m_ErrorCode.setMessage(e.getMessage());
+            m_ErrorCode.setIntParameter(1);
+            return 0;
+        }
+    }
 
-		String str = new String(bytes);
-		return str;
-	}
+    public float ReadFloat() {
+        try {
+            return mDataInputStream.readFloat();
+        } catch (IOException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.ERROR_READ_FILE;
+            m_ErrorCode.setMessage(e.getMessage());
+            m_ErrorCode.setIntParameter(2);
+            return 0f;
+        }
+    }
 
-	public void ReadElement(ArrayList<String> sa)
-	{
-		int sa_size = ReadElement();
+    public String ReadString() {
+        try {
+            return mDataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.ERROR_READ_FILE;
+            m_ErrorCode.setMessage(e.getMessage());
+            m_ErrorCode.setIntParameter(3);
+            return "";
+        }
+    }
 
-		for (int i = 0; i < sa_size; i++)
-		{
-			int strlength = ReadElement();
-			String sElem = ReadElement(strlength);
+    public boolean ReadBoolean() {
+        try {
+            return mDataInputStream.readBoolean();
+        } catch (IOException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.ERROR_READ_FILE;
+            m_ErrorCode.setMessage(e.getMessage());
+            m_ErrorCode.setIntParameter(4);
+            return false;
+        }
+    }
 
-			sa.add(i,sElem);
-		}
-	}
-
-
-	public void CloseFile()
-	{
-		try
-		{
-			m_fs.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    public void close() {
+        try {
+            mDataInputStream.close();
+            m_fs.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            m_ErrorCode = TErrorCode.ERROR_READ_FILE;
+            m_ErrorCode.setMessage(e.getMessage());
+            m_ErrorCode.setIntParameter(5);
+        }
+    }
 }

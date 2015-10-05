@@ -1,66 +1,55 @@
 package toms.lib.libtcommon;
 
-import android.app.Activity;
+import android.content.Context;
 
 import java.util.ArrayList;
 
 /**
  * Created by toms on 21/09/13.
- * Base class for Internal File Management
+ * Classe base per operazioni su file interni.
  */
-public class TInternalFileManager
-{
-
-	protected Activity m_Owner = null;
+public class TInternalFileManager {
 
 
-	protected int m_ErrorCode = 0;
-	final protected int OPERATION_SUCCESS = 1;
-	final protected int ACTIVITY_OWNER_NOT_DEFINED = -1;
+    protected TErrorCode m_ErrorCode = TErrorCode.SUCCESS;
+
+    Context mContext = null;
 
 
-	public TInternalFileManager(Activity owner)
-	{
-		m_Owner = owner;
-	}
+    public TInternalFileManager(Context c) {
+        mContext = c;
+    }
 
-	public boolean FileExist(String sFileName)
-	{
-		if (m_Owner == null)
-		{
-			m_ErrorCode = ACTIVITY_OWNER_NOT_DEFINED;
-			return false;
-		}
+    public boolean FileExist(String sFileName) {
+        if (mContext == null) {
+            m_ErrorCode = TErrorCode.ACTIVITY_OWNER_NOT_DEFINED;
+            return false;
+        }
 
-		m_ErrorCode = OPERATION_SUCCESS;
-		String[] file_list = m_Owner.fileList();
+        m_ErrorCode = TErrorCode.SUCCESS;
 
-		for (String file : file_list) {
-			if (sFileName.compareTo(file) == 0) {
-				return true;
-			}
-		}
+        for (String filename : mContext.fileList()) {
+            if (sFileName.compareTo(filename) == 0) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        m_ErrorCode = TErrorCode.FILE_NOT_FOUND;
+        return false;
+    }
 
-	public int GetErrorCode()
-	{
-		return m_ErrorCode;
-	}
+    public TErrorCode GetErrorCode() {
+        return m_ErrorCode;
+    }
 
-	public ArrayList<String> GetInternalFileList()
-	{
-		ArrayList<String> filelist = new ArrayList<>();
+    public ArrayList<String> GetInternalFileList() {
+        ArrayList<String> filelist = new ArrayList<String>();
 
-		String[] file_list = m_Owner.fileList();
-		for (int i = 0; i < file_list.length; i++)
-		{
-			filelist.add(i, file_list[i]);
-		}
-		return filelist;
-	}
-
+        String[] file_list = mContext.fileList();
+        for (int i = 0; i < file_list.length; i++) {
+            filelist.add(i, file_list[i]);
+        }
+        return filelist;
+    }
 
 }
-
