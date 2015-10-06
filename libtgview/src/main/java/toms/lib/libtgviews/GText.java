@@ -404,6 +404,9 @@ public class GText extends GRect implements IGInput {
 
         mbAutoclose = bAutoclose;
 
+        mView.setFocusable(true);
+        mView.setFocusableInTouchMode(true);
+
         mView.requestFocus();
         mView.setInputReceiver(this);
 
@@ -476,12 +479,13 @@ public class GText extends GRect implements IGInput {
         });
 
         mView.clearFocus();
+        mView.setFocusable(false);
+        mView.setFocusableInTouchMode(false);
     }
 
     public void setSoftkeyboardFastInput(boolean bEnable) {
         mbSoftkeyboardFastInput = bEnable;
     }
-
 
     // Restituisce la struttura parametri per tastiera ime.
     public void getEditorInfo(EditorInfo outAttrs) {

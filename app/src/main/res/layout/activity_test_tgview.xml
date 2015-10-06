@@ -11,9 +11,9 @@
     tools:context="toms.tviews.TestTGViewActivity">
 
     <toms.lib.libtgviews.GView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tgraphview"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>

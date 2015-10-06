@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,9 +35,6 @@ public class GView extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         mContext = context;
         mScene = null;
-
-        //setFocusable(true);
-        //setFocusableInTouchMode(true);
     }
 
     public GView(Context context, AttributeSet attrSet) {
@@ -45,8 +43,6 @@ public class GView extends SurfaceView implements SurfaceHolder.Callback {
         mContext = context;
         mScene = null;
 
-        //setFocusable(true);
-        //setFocusableInTouchMode(true);
     }
 
     public void setScene(GScene scene) {
