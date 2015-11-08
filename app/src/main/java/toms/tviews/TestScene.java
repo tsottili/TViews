@@ -7,17 +7,17 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import toms.lib.libtgviews.GBackground;
-import toms.lib.libtgviews.GFillCircle;
-import toms.lib.libtgviews.GImage;
-import toms.lib.libtgviews.GItem;
-import toms.lib.libtgviews.GPath;
-import toms.lib.libtgviews.GPoint;
-import toms.lib.libtgviews.GScene;
-import toms.lib.libtgviews.GStrokeCircle;
-import toms.lib.libtgviews.GStrokeRect;
-import toms.lib.libtgviews.GText;
-import toms.lib.libtgviews.GView;
+import toms.lib.libtgview.GBackground;
+import toms.lib.libtgview.GFillCircle;
+import toms.lib.libtgview.GImage;
+import toms.lib.libtgview.GItem;
+import toms.lib.libtgview.GPath;
+import toms.lib.libtgview.GPoint;
+import toms.lib.libtgview.GScene;
+import toms.lib.libtgview.GStrokeCircle;
+import toms.lib.libtgview.GStrokeRect;
+import toms.lib.libtgview.GText;
+import toms.lib.libtgview.GView;
 
 
 /**

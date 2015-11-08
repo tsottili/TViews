@@ -3,7 +3,7 @@ package toms.tviews;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import toms.lib.libtgviews.GView;
+import toms.lib.libtgview.GView;
 
 public class TestTGViewActivity extends AppCompatActivity {
 
