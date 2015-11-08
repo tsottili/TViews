@@ -1,0 +1,3 @@
+[submodule "libtcommon"]
+	path = libtcommon
+	url = https://github.com/tsottili/libtcommon
