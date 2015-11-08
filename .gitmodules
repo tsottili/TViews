@@ -1,3 +1,6 @@
 [submodule "libtcommon"]
 	path = libtcommon
 	url = https://github.com/tsottili/libtcommon
+[submodule "libtviews"]
+	path = libtviews
+	url = https://github.com/tsottili/libtviews
