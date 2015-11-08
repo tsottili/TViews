@@ -4,3 +4,6 @@
 [submodule "libtviews"]
 	path = libtviews
 	url = https://github.com/tsottili/libtviews
+[submodule "libtgview"]
+	path = libtgview
+	url = https://github.com/tsottili/libtgview
